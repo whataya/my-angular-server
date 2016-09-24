@@ -14,9 +14,8 @@ let handler = {
         if (!username || !password) {
             return callback({success: false, msg: '用户名/密码不能为空'});
         }
-
         // TODO: 密码需要base64编码
-        password = utils.md5(username + 'manager.' + password);
+        password = utils.md5(password + 'manager.' + password);
         User.find(
             {
                 '$or': [
@@ -32,7 +31,10 @@ let handler = {
             }, 
             {
                 'password': 0,
-                'state': 0
+                'state': 0,
+                'login_counts': 0,
+                'ip': 0,
+                'status': 0
             }, 
             function (err, docs) {
                 if (!err) {
@@ -77,7 +79,7 @@ let handler = {
         if (!username || !password || !email) {
             return callback({success: false, msg: '信息不完整，请重新输入'});
         }
-        password = utils.md5(username + 'manager.' + password);
+        password = utils.md5(password + 'manager.' + password);
         // 新建用户
         async.waterfall([
             // 验证用户名或者邮箱是否已经存在
