@@ -59,6 +59,16 @@ let utils = {
         let md5 = crypto.createHash('md5');
         md5.update(content);
         return md5.digest('hex');
+    },
+    /**
+     * 格式化时间
+     * (01/01/2016 && 01:00) TO '2016-01-01 01:00:00'
+     * @param {any} date
+     */
+    formatDate (date, clock) {
+        date = date ? (date.split('/').reverse().join('-')): date;
+        clock = clock ? (clock + ':00') : '';
+        return date + ' ' + clock;
     }
 }
 
